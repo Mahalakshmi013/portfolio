@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mahalakshmi Senthilkumar — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #7c3aed;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --card: #13131d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(16px);
+    background: rgba(10,10,15,0.7);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent2); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+    bottom: -100px; left: 10%;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 540px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn {
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
+
+  /* SECTION LAYOUT */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #b0b0c0;
+    margin-bottom: 1.2rem;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--accent2);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { }
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .exp-company {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .exp-desc { font-size: 0.9rem; color: #9090a8; line-height: 1.8; }
+  .exp-desc li { margin-bottom: 0.5rem; list-style: none; padding-left: 1rem; position: relative; }
+  .exp-desc li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .project-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .project-card:hover::before { opacity: 1; }
+  .project-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .project-desc { font-size: 0.88rem; color: #9090a8; line-height: 1.75; margin-bottom: 1.5rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    background: rgba(124,58,237,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(124,58,237,0.3);
+    letter-spacing: 0.05em;
+  }
+  .tag.cyan {
+    background: rgba(6,182,212,0.12);
+    color: var(--accent2);
+    border-color: rgba(6,182,212,0.3);
+  }
+
+  /* SKILLS */
+  .skills-grid { display: flex; flex-direction: column; gap: 2rem; }
+  .skill-group { }
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 1rem;
+  }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.83rem;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .pill:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* EDUCATION */
+  .edu-list { display: flex; flex-direction: column; gap: 0; }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .edu-loc { font-size: 0.83rem; color: var(--muted); }
+  .edu-degree {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+  .edu-school { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.8rem; }
+  .edu-courses { font-size: 0.85rem; color: #8080a0; line-height: 1.7; }
+
+  /* CONTACT */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-text p {
+    font-size: 1rem;
+    color: #9090a8;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent2); transform: translateX(4px); }
+  .contact-link-icon {
+    font-size: 1.2rem;
+    width: 2rem;
+    text-align: center;
+  }
+  .contact-link-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.1rem;
+  }
+  .contact-link-val { font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item, .edu-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MS</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <p class="hero-tag">// Graduate Student · AI & Data Engineering</p>
+  <h1>Mahalakshmi<br><em>Senthilkumar</em></h1>
+  <p class="hero-sub">Building intelligent systems at the intersection of machine learning, data science, and accessible technology. Currently pursuing MS Information Systems at SUNY Binghamton.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Projects</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal">// 01 — About</p>
+  <h2 class="section-title reveal">Passionate about building<br><em style="font-style:italic;color:var(--accent)">tech that matters.</em></h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a graduate student in Information Systems at SUNY Binghamton with a strong foundation in computer science from RMK Engineering College, Chennai.</p>
+      <p>My work spans machine learning, computer vision, NLP, and full-stack development. I'm particularly driven by projects that create real-world impact — from assistive technology for accessibility to real-time translation platforms for the hearing-impaired.</p>
+      <p>I bring a blend of academic rigor and hands-on engineering experience, with a passion for turning data into actionable insights and intelligent applications.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Major Projects Delivered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Technologies & Tools</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">95%</div>
+        <div class="stat-label">Gesture Recognition Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3.56</div>
+        <div class="stat-label">Bachelor's GPA (4.0 scale)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label reveal">// 02 — Experience</p>
+  <h2 class="section-title reveal">Where I've worked.</h2>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">AUG 2023</div>
+        <div class="exp-company">Nithin Enterprise<br>Chennai, India</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Student Intern — Web Development</div>
+        <ul class="exp-desc">
+          <li>Developed a responsive web application using Bootstrap and Flexbox, achieving 95% mobile compatibility across devices.</li>
+          <li>Implemented HTML, CSS, JavaScript with SASS/LESS for modular CSS, improving code maintainability and reusability by 40%.</li>
+          <li>Collaborated on front-end and back-end integration, enhancing overall website performance and user experience.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">MAR 2022</div>
+        <div class="exp-company">RMK Engineering College<br>Chennai, India</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Security Systems Intern</div>
+        <ul class="exp-desc">
+          <li>Assisted in installation, configuration, and testing of CCTV systems, ensuring 100% operational coverage across all designated areas.</li>
+          <li>Explored cybersecurity concepts including the CIA triad and collaborated on camera placement optimization, improving monitoring efficiency by 25%.</li>
+          <li>Gained hands-on experience in wiring, hardware setup, and system integration in real-world security environments.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">// 03 — Projects</p>
+  <h2 class="section-title reveal">Things I've built.</h2>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-num">001 — Jan 2024</div>
+      <div class="project-title">SignLingo: Real-Time Sign Language Translation</div>
+      <p class="project-desc">A comprehensive real-time platform translating sign language gestures into text and speech, improving communication efficiency by 70% for hearing-impaired users. Achieved 95% gesture recognition accuracy across diverse sign language patterns.</p>
+      <div class="project-tags">
+        <span class="tag">OpenCV</span>
+        <span class="tag">MediaPipe</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag cyan">Computer Vision</span>
+        <span class="tag cyan">NLP</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">002 — Mar 2023</div>
+      <div class="project-title">Eye-Tracking Mouse for Accessible Computing</div>
+      <p class="project-desc">An innovative eye-tracking system enabling hands-free computer access for differently-abled users. Improved digital accessibility by 60% through gaze-based navigation with 92% detection accuracy. Optimized system latency by 35% through algorithmic improvements.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">IR Sensors</span>
+        <span class="tag cyan">Computer Vision</span>
+        <span class="tag cyan">Accessibility Tech</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">003 — Sep 2022</div>
+      <div class="project-title">Intelligent Voice-Controlled Virtual Assistant</div>
+      <p class="project-desc">A comprehensive voice assistant similar to Alexa/Siri built with Python and HTML. Achieved 90% command execution success rate, reduced manual task effort by 40%, and cut task completion time by 50% through intelligent automation.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">NLP</span>
+        <span class="tag">Speech Recognition</span>
+        <span class="tag cyan">HTML</span>
+        <span class="tag cyan">Automation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">// 04 — Skills</p>
+  <h2 class="section-title reveal">What I work with.</h2>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Programming Languages</div>
+      <div class="skill-pills">
+        <span class="pill">Python</span><span class="pill">R</span><span class="pill">SQL</span><span class="pill">Java</span><span class="pill">C++</span><span class="pill">JavaScript</span><span class="pill">HTML/CSS</span><span class="pill">Scala</span><span class="pill">Go</span><span class="pill">MATLAB</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Machine Learning & AI</div>
+      <div class="skill-pills">
+        <span class="pill">TensorFlow</span><span class="pill">PyTorch</span><span class="pill">scikit-learn</span><span class="pill">Keras</span><span class="pill">XGBoost</span><span class="pill">LightGBM</span><span class="pill">MLflow</span><span class="pill">Hugging Face</span><span class="pill">OpenAI</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Deep Learning & Computer Vision</div>
+      <div class="skill-pills">
+        <span class="pill">CNN</span><span class="pill">RNN / LSTM</span><span class="pill">GAN</span><span class="pill">BERT</span><span class="pill">Transformers</span><span class="pill">OpenCV</span><span class="pill">YOLO</span><span class="pill">NLP</span><span class="pill">Object Detection</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Data Science & Analytics</div>
+      <div class="skill-pills">
+        <span class="pill">pandas</span><span class="pill">NumPy</span><span class="pill">matplotlib</span><span class="pill">seaborn</span><span class="pill">Plotly</span><span class="pill">Jupyter</span><span class="pill">A/B Testing</span><span class="pill">Time Series</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Databases & Tools</div>
+      <div class="skill-pills">
+        <span class="pill">MySQL</span><span class="pill">PostgreSQL</span><span class="pill">MongoDB</span><span class="pill">Redis</span><span class="pill">Git</span><span class="pill">Jenkins</span><span class="pill">Tableau</span><span class="pill">Power BI</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Software Development</div>
+      <div class="skill-pills">
+        <span class="pill">React</span><span class="pill">Node.js</span><span class="pill">Flask</span><span class="pill">Django</span><span class="pill">FastAPI</span><span class="pill">REST APIs</span><span class="pill">Microservices</span><span class="pill">CI/CD</span><span class="pill">Agile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label reveal">// 05 — Education</p>
+  <h2 class="section-title reveal">Academic background.</h2>
+  <div class="edu-list">
+    <div class="edu-item reveal">
+      <div class="edu-meta">
+        <div class="edu-date">AUG 2024 — PRESENT</div>
+        <div class="edu-loc">Binghamton, NY</div>
+      </div>
+      <div>
+        <div class="edu-degree">Master of Science — Information Systems</div>
+        <div class="edu-school">State University of New York, Binghamton</div>
+        <div class="edu-courses">Coursework: Python for Data Mining · Tools for Data Science · Management of Systems · DBMS · Applied Data Mining · Intro to NLP</div>
+      </div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-meta">
+        <div class="edu-date">AUG 2022 — APR 2024</div>
+        <div class="edu-loc">Chennai, India</div>
+      </div>
+      <div>
+        <div class="edu-degree">Bachelor of Engineering — Computer Science</div>
+        <div class="edu-school">RMK Engineering College &nbsp;·&nbsp; GPA: 3.56 / 4.0</div>
+        <div class="edu-courses">Coursework: Object Oriented Programming · Computer Networks · Operating Systems · Java Programming · Data Structures & Algorithms · Programming Languages</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">// 06 — Contact</p>
+  <h2 class="section-title reveal">Let's connect.</h2>
+  <div class="contact-inner">
+    <div class="contact-text reveal">
+      <p>I'm currently open to new opportunities — internships, research collaborations, and full-time roles in data science, machine learning, and software engineering. Feel free to reach out!</p>
+      <a href="mailto:mahalakshmisenthilkumar08@gmail.com" class="btn btn-primary">Say Hello →</a>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:mahalakshmisenthilkumar08@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">mahalakshmisenthilkumar08@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+16072456992" class="contact-link">
+        <span class="contact-link-icon">☎</span>
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-val">+1 (607) 245-6992</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">linkedin.com/in/mahalakshmi</div>
+        </div>
+      </a>
+      <div class="contact-link" style="cursor:default;">
+        <span class="contact-link-icon">📍</span>
+        <div>
+          <div class="contact-link-label">Location</div>
+          <div class="contact-link-val">Binghamton, NY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Mahalakshmi Senthilkumar</p>
+  <p>Built for LinkedIn Portfolio</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
